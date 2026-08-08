@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WonderTrips Travels — Explore the World in Style</title>
+  <meta name="description" content="WonderTrips Travels offers premium tour packages to breathtaking destinations worldwide. Book your dream vacation today." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #A855F7;
+      --purple-dark: #5B21B6;
+      --teal: #0D9488;
+      --teal-light: #14B8A6;
+      --teal-dark: #0F766E;
+      --dark: #0A0A1A;
+      --dark2: #10102A;
+      --dark3: #16163A;
+      --card-bg: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.09);
+      --text: #F1F0FF;
+      --text-muted: #9CA3AF;
+      --gradient: linear-gradient(135deg, var(--purple), var(--teal));
+      --gradient-soft: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(13,148,136,0.15));
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ============================
+       SPLASH SCREEN
+    ============================ */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: splashFadeOut 0.8s ease-out 2.8s forwards;
+    }
+    #splash::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,58,237,0.25) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 60% 60%, rgba(13,148,136,0.2) 0%, transparent 70%);
+    }
+    .splash-logo-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: splashLogoIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+    }
+    .splash-logo-img {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(124,58,237,0.5), 0 0 120px rgba(13,148,136,0.3);
+      animation: logoPulse 1.5s ease-in-out infinite;
+    }
+    .splash-brand {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .splash-tagline {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: splashLogoIn 1s ease 0.7s both;
+    }
+    .splash-bar {
+      margin-top: 40px;
+      width: 200px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .splash-bar-fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 99px;
+      animation: barFill 2.2s ease 0.5s forwards;
+      width: 0%;
+    }
+    @keyframes barFill { to { width: 100%; } }
+    @keyframes splashFadeOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    @keyframes splashLogoIn {
+      from { opacity: 0; transform: scale(0.7) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 60px rgba(124,58,237,0.5), 0 0 120px rgba(13,148,136,0.3); }
+      50% { box-shadow: 0 0 80px rgba(124,58,237,0.8), 0 0 160px rgba(13,148,136,0.5); }
+    }
+
+    /* ============================
+       NAVBAR
+    ============================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,26,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      transition: background 0.3s;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .nav-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--gradient);
+      color: #fff !important;
+      padding: 9px 22px;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span { width: 25px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+    /* ============================
+       HERO
+    ============================ */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=90') center/cover no-repeat;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(10,10,26,0.55) 0%,
+        rgba(10,10,26,0.35) 40%,
+        rgba(10,10,26,0.85) 100%);
+    }
+    .hero-orb1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+      top: -100px; left: -150px;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .hero-orb2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,148,136,0.25) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      animation: orbFloat 10s ease-in-out infinite reverse;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -30px); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: 0 24px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,58,237,0.2);
+      border: 1px solid rgba(124,58,237,0.4);
+      color: var(--purple-light);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 3.4s both;
+    }
+    .hero-badge::before { content: '✦'; }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp 0.8s ease 3.6s both;
+    }
+    .hero-title .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(241,240,255,0.75);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s ease 3.8s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 4s both;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gradient);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 30px rgba(124,58,237,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(124,58,237,0.5); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      animation: fadeUp 0.8s ease 4.2s both;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================
+       SECTIONS COMMON
+    ============================ */
+    section { padding: 100px 40px; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-subtitle { margin: 0 auto; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* ============================
+       DESTINATIONS — CARD STYLE (like reference)
+    ============================ */
+    #destinations { background: var(--dark2); }
+
+    .dest-intro {
+      margin-bottom: 48px;
+    }
+    .dest-intro-note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-top: 10px;
+      max-width: 420px;
+    }
+    .dest-intro-note a { color: var(--teal-light); text-decoration: none; }
+
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    /* Card with photo on top */
+    .dest-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .dest-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(124,58,237,0.2);
+      border-color: rgba(124,58,237,0.35);
+    }
+
+    /* Photo section */
+    .dest-photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .dest-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover .dest-photo { transform: scale(1.08); }
+    .dest-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(10,10,26,0.75) 100%);
+    }
+    .dest-card-num {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(10,10,26,0.65);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.8);
+    }
+    .dest-type-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10,10,26,0.65);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      color: var(--teal-light);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .dest-price-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      background: var(--gradient);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.5);
+    }
+
+    /* Card body */
+    .dest-card-body {
+      padding: 22px 22px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .dest-card-loc {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 7px;
+    }
+    .dest-card-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .dest-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    /* Footer: price + duration row, then full-width button */
+    .dest-card-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .dest-footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dest-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .dest-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .dest-price-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .dest-price-suffix { font-size: 0.76rem; color: var(--text-muted); }
+    .dest-duration-tag {
+      font-size: 0.75rem;
+      color: var(--teal-light);
+      font-weight: 600;
+    }
+    .dest-book-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      white-space: nowrap;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 4px 18px rgba(124,58,237,0.4);
+    }
+    .dest-book-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,58,237,0.55); opacity: 0.95; }
+    .dest-book-btn svg { flex-shrink: 0; }
+
+    .no-destinations {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+    }
+    .no-destinations .no-dest-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .no-destinations h3 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; margin-bottom: 10px; color: var(--text); }
+    .no-destinations p { font-size: 0.9rem; }
+
+    /* ============================
+       HOW IT WORKS
+    ============================ */
+    #how-it-works { background: var(--dark); }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+    }
+    .step-card {
+      text-align: center;
+      padding: 40px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(13,148,136,0.15);
+    }
+    .step-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.25;
+      position: absolute;
+      top: 14px; right: 22px;
+    }
+    .step-icon {
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      background: var(--gradient-soft);
+      border: 1px solid rgba(124,58,237,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+    }
+    .step-title { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .step-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ============================
+       BOOKING SECTION
+    ============================ */
+    #booking {
+      background: var(--dark2);
+      position: relative;
+      overflow: hidden;
+    }
+    #booking::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(124,58,237,0.12) 0%, transparent 70%);
+    }
+    .booking-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .booking-info h2 { font-family: 'Outfit', sans-serif; font-size: 2.4rem; font-weight: 800; margin-bottom: 16px; }
+    .booking-info p { color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+    .booking-features { display: flex; flex-direction: column; gap: 16px; }
+    .booking-feat { display: flex; align-items: center; gap: 14px; font-size: 0.9rem; }
+    .booking-feat-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--gradient-soft);
+      border: 1px solid rgba(124,58,237,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .booking-form-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+    }
+    .booking-form-title { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+    .booking-form-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 0.82rem; font-weight: 600; color: rgba(241,240,255,0.7); }
+    .form-input, .form-select, .form-textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      color: var(--text);
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--purple);
+      background: rgba(124,58,237,0.08);
+    }
+    .form-select option { background: #1a1a3e; color: var(--text); }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
+    .whatsapp-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ============================
+       TESTIMONIALS
+    ============================ */
+    #testimonials { background: var(--dark); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .testi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-5px); }
+    .testi-stars { color: #FBBF24; font-size: 0.9rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { font-size: 0.92rem; color: rgba(241,240,255,0.8); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem;
+    }
+    .testi-name { font-weight: 600; font-size: 0.9rem; }
+    .testi-loc { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ============================
+       FOOTER (no admin link)
+    ============================ */
+    footer {
+      background: var(--dark2);
+      border-top: 1px solid var(--card-border);
+      padding: 60px 40px 30px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-brand-name img { width: 32px; height: 32px; border-radius: 8px; }
+    .footer-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+    .footer-col h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--purple-light); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================
+       DESTINATION DETAIL MODAL
+    ============================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-box {
+      background: var(--dark2);
+      border: 1px solid var(--card-border);
+      border-radius: 26px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.88) translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.34,1.36,0.64,1);
+      position: relative;
+    }
+    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
+    .modal-photo {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 26px 26px 0 0;
+    }
+    .modal-photo-placeholder {
+      width: 100%; height: 240px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(13,148,136,0.3));
+      border-radius: 26px 26px 0 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(239,68,68,0.5); }
+    .modal-body { padding: 28px; }
+    .modal-type { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-light); margin-bottom: 6px; }
+    .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.7rem; font-weight: 900; margin-bottom: 6px; }
+    .modal-location { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px; }
+    .modal-desc { color: rgba(241,240,255,0.8); font-size: 0.9rem; line-height: 1.7; margin-bottom: 18px; }
+    .modal-highlights { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .highlight-tag {
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: var(--purple-light);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .modal-info-row {
+      display: flex;
+      gap: 24px;
+      padding: 18px 0;
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 20px;
+    }
+    .modal-info-item { display: flex; flex-direction: column; gap: 3px; }
+    .modal-info-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .modal-info-val { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--purple-light); }
+    .modal-book-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    }
+    .modal-book-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.5); }
+
+    /* ============================
+       SCROLL REVEAL
+    ============================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================
+       RESPONSIVE
+    ============================ */
+    @media (max-width: 900px) {
+      .booking-wrap { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 73px; left: 0; right: 0;
+        background: rgba(10,10,26,0.97);
+        padding: 24px;
+        gap: 20px;
+        border-bottom: 1px solid var(--card-border);
+        z-index: 99;
+      }
+      .hamburger { display: flex; }
+      section { padding: 80px 24px; }
+      .hero-stats { gap: 24px; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================
+     SPLASH SCREEN
+============================ -->
+<div id="splash">
+  <div class="splash-logo-wrap">
+    <img src="logo.jpg" alt="WonderTrips Logo" class="splash-logo-img" onerror="this.style.display='none'" />
+    <div class="splash-brand">WonderTrips Travels</div>
+    <div class="splash-tagline">Your Journey Begins Here</div>
+    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- ============================
+     NAVBAR (no admin link)
+============================ -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <img src="logo.jpg" alt="Logo" class="nav-logo" onerror="this.style.display='none'" />
+    <span class="nav-name">WonderTrips</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ============================
+     HERO
+============================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Premium Travel Experiences</div>
+    <h1 class="hero-title">
+      Discover the World's<br /><span class="gradient-text">Most Breathtaking</span><br />Destinations
+    </h1>
+    <p class="hero-subtitle">
+      Hand-crafted travel packages that take you beyond the ordinary.<br />
+      From serene beaches to majestic mountains — we make every journey unforgettable.
+    </p>
+    <div class="hero-actions">
+      <a href="#destinations" class="btn-primary">✦ Explore Destinations</a>
+      <a href="#booking" class="btn-secondary">📅 Book a Trip</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Happy Travellers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Destinations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     DESTINATIONS
+============================ -->
+<section id="destinations">
+  <div class="container">
+    <div class="dest-intro reveal">
+      <div class="section-label">🌍 Current Trails</div>
+      <h2 class="section-title">Featured Destinations</h2>
+      <p class="dest-intro-note">Every package below is live and available to book. Tap <strong>Book on WhatsApp</strong> to send your details straight to us.</p>
+    </div>
+    <div class="destinations-grid" id="destGrid">
+      <!-- Loaded dynamically by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     HOW IT WORKS
+============================ -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-header center reveal">
+      <div class="section-label">🧭 The Process</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Booking your dream trip is as easy as 1-2-3.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <span class="step-num">01</span>
+        <div class="step-icon">🗺️</div>
+        <h3 class="step-title">Choose a Destination</h3>
+        <p class="step-desc">Browse our curated list of breathtaking destinations and pick the one that calls to you.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">02</span>
+        <div class="step-icon">📋</div>
+        <h3 class="step-title">Fill Booking Form</h3>
+        <p class="step-desc">Share your travel details — dates, number of persons, and any special requirements.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">03</span>
+        <div class="step-icon">💬</div>
+        <h3 class="step-title">WhatsApp Confirmation</h3>
+        <p class="step-desc">Your details are sent instantly to our team via WhatsApp. We'll confirm and plan everything for you!</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">04</span>
+        <div class="step-icon">✈️</div>
+        <h3 class="step-title">Enjoy Your Trip!</h3>
+        <p class="step-desc">Sit back and relax. We handle all the arrangements so you can focus on making memories.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     BOOKING
+============================ -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-wrap">
+      <div class="booking-info reveal">
+        <div class="section-label">📲 Book Instantly</div>
+        <h2>Ready for Your<br /><span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Next Adventure?</span></h2>
+        <p>Fill in your travel details and we'll connect you instantly with our team via WhatsApp. No waiting, no hassle — just seamless booking.</p>
+        <div class="booking-features">
+          <div class="booking-feat">
+            <div class="booking-feat-icon">⚡</div>
+            <span>Instant WhatsApp confirmation to our team</span>
+          </div>
+          <div class="booking-feat">
+            <div class="booking-feat-icon">🔒</div>
+            <span>100% secure &amp; transparent pricing</span>
+          </div>
+          <div class="booking-feat">
+            <div class="booking-feat-icon">🌟</div>
+            <span>Personalised trip planning just for you</span>
+          </div>
+          <div class="booking-feat">
+            <div class="booking-feat-icon">🎯</div>
+            <span>Expert guides &amp; curated experiences</span>
+          </div>
+        </div>
+      </div>
+      <div class="booking-form-card reveal">
+        <div class="booking-form-title">Book Your Trip</div>
+        <div class="booking-form-sub">Fill the form — we'll WhatsApp you within minutes!</div>
+        <form id="bookingForm" onsubmit="handleBooking(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="bookName">Full Name *</label>
+              <input id="bookName" class="form-input" type="text" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookPhone">Phone Number *</label>
+              <input id="bookPhone" class="form-input" type="tel" placeholder="+91 9876543210" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookEmail">Email Address *</label>
+            <input id="bookEmail" class="form-input" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="bookDest">Destination *</label>
+              <select id="bookDest" class="form-select" required>
+                <option value="">Select destination</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookDate">Travel Date *</label>
+              <input id="bookDate" class="form-input" type="date" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookPersons">Number of Persons *</label>
+            <input id="bookPersons" class="form-input" type="number" min="1" max="50" placeholder="e.g. 2" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookRemarks">Special Requests / Notes</label>
+            <textarea id="bookRemarks" class="form-textarea" placeholder="Any dietary preferences, special needs, or additional info..."></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="bookBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Send Booking via WhatsApp
+          </button>
+          <div class="whatsapp-note">🔒 Your info is sent securely to our travel team</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     TESTIMONIALS
+============================ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header center reveal">
+      <div class="section-label">💬 Traveller Stories</div>
+      <h2 class="section-title">What Our Guests Say</h2>
+      <p class="section-subtitle">Real experiences from real travellers who trusted WonderTrips.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"WonderTrips made our honeymoon absolutely magical. Every detail was perfectly arranged. We couldn't have asked for a better experience!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">PR</div>
+          <div><div class="testi-name">Priya Rajan</div><div class="testi-loc">Kerala, India</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The WhatsApp booking was so easy! Within minutes the team called us back and planned the whole trip. Truly outstanding service."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div><div class="testi-name">Arun Kumar</div><div class="testi-loc">Chennai, India</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Best travel agency ever! The Bali trip was phenomenal. Guides were excellent, hotels were top-notch, and the price was very reasonable."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SM</div>
+          <div><div class="testi-name">Sneha Mohan</div><div class="testi-loc">Bengaluru, India</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     FOOTER (no admin link)
+============================ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">
+        <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'" />
+        WonderTrips Travels
+      </div>
+      <p class="footer-desc">Your trusted partner for premium travel experiences. We craft journeys that create lifelong memories.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#booking">Book a Trip</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="#">📞 +91 9999999999</a></li>
+        <li><a href="#">📧 info@wondertrips.in</a></li>
+        <li><a href="#">📍 India</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 WonderTrips Travels. All rights reserved.</span>
+    <span>Built with ❤️ for travellers <a href="admin.html" style="text-decoration:none; color:inherit; opacity:0.5; margin-left: 10px; font-size: 0.8em;" title="Admin Login">⚙️</a></span>
+  </div>
+</footer>
+
+<!-- ============================
+     DESTINATION DETAIL MODAL
+============================ -->
+<div class="modal-overlay" id="destModal" onclick="handleModalClick(event)">
+  <div class="modal-box" id="destModalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalPhotoWrap"></div>
+    <div class="modal-body">
+      <div class="modal-type" id="modalType"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-location" id="modalLoc"></p>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-highlights" id="modalHighlights"></div>
+      <div class="modal-info-row">
+        <div class="modal-info-item">
+          <span class="modal-info-label">Price / Person</span>
+          <span class="modal-info-val" id="modalPrice"></span>
+        </div>
+        <div class="modal-info-item">
+          <span class="modal-info-label">Duration</span>
+          <span class="modal-info-val" id="modalDuration"></span>
+        </div>
+      </div>
+      <button class="modal-book-btn" onclick="bookFromModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Book This Destination on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================
+  // CONFIG
+  // ============================
+  function getAdminWhatsApp() {
+    return localStorage.getItem('wt_wa_number') || '919999999999';
+  }
+
+  // ============================
+  // DESTINATIONS
+  // ============================
+  function getDestinations() {
+    try { return JSON.parse(localStorage.getItem('wt_destinations') || '[]'); } catch { return []; }
+  }
+
+  const WA_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>`;
+
+  function renderDestinations() {
+    const grid = document.getElementById('destGrid');
+    const dests = getDestinations();
+
+    // Populate booking select
+    const select = document.getElementById('bookDest');
+    select.innerHTML = '<option value="">Select destination</option>';
+    dests.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.name;
+      opt.textContent = d.name + (d.location ? ` — ${d.location}` : '');
+      select.appendChild(opt);
+    });
+
+    if (dests.length === 0) {
+      grid.innerHTML = `
+        <div class="no-destinations">
+          <span class="no-dest-icon">🌍</span>
+          <h3>Destinations Coming Soon!</h3>
+          <p>Our travel team is curating amazing packages for you. Check back shortly!</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = dests.map((d, i) => {
+      const hasPhoto = d.image && d.image.length > 10;
+      const photoHtml = hasPhoto
+        ? `<img class="dest-photo" src="${d.image}" alt="${d.name}" onerror="this.parentElement.innerHTML='<div style=\'height:200px;background:linear-gradient(135deg,rgba(124,58,237,0.4),rgba(13,148,136,0.4));display:flex;align-items:center;justify-content:center;font-size:3rem;\'>🌍</div>'" />`
+        : `<div style="height:200px;background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(13,148,136,0.3));display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🌍</div>`;
+      const num = String(i + 1).padStart(2, '0');
+
+      return `<div class="dest-card reveal" id="destCard${i}">
+        <div class="dest-photo-wrap">
+          ${photoHtml}
+          <div class="dest-photo-overlay"></div>
+          <div class="dest-card-num">${num}</div>
+          ${d.category ? `<div class="dest-type-tag">${d.category}</div>` : ''}
+          <div class="dest-price-badge">₹${Number(d.price||0).toLocaleString('en-IN')}</div>
+        </div>
+        <div class="dest-card-body">
+          <div class="dest-card-loc">📍 ${d.location || 'India'}</div>
+          <h3 class="dest-card-name">${d.name}</h3>
+          <p class="dest-card-desc">${d.description || 'An amazing destination waiting to be discovered.'}</p>
+          <div class="dest-card-footer">
+            <div class="dest-footer-top">
+              <div class="dest-meta">
+                <div class="dest-price-row">
+                  <span class="dest-price-num">₹${Number(d.price||0).toLocaleString('en-IN')}</span>
+                  <span class="dest-price-suffix">per person</span>
+                </div>
+                <div class="dest-duration-tag">⏱ ${d.duration || 'Flexible'}</div>
+              </div>
+            </div>
+            <button class="dest-book-btn" onclick="event.stopPropagation(); quickBook('${d.name.replace(/'/g,"\\'")}')">
+              ${WA_ICON} Book on WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Click card to open modal
+    dests.forEach((_, i) => {
+      const card = document.getElementById('destCard' + i);
+      if (card) card.addEventListener('click', (e) => {
+        if (!e.target.closest('.dest-book-btn')) openModal(i);
+      });
+    });
+
+    // Re-observe reveals
+    setTimeout(() => {
+      document.querySelectorAll('.dest-card.reveal').forEach(el => revealObserver.observe(el));
+    }, 100);
+  }
+
+  function quickBook(name) {
+    document.getElementById('bookDest').value = name;
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ============================
+  // MODAL
+  // ============================
+  let currentModalDest = null;
+  function openModal(index) {
+    const dests = getDestinations();
+    const d = dests[index];
+    currentModalDest = d;
+
+    // Photo
+    const photoWrap = document.getElementById('modalPhotoWrap');
+    if (d.image && d.image.length > 10) {
+      photoWrap.innerHTML = `<img class="modal-photo" src="${d.image}" alt="${d.name}" onerror="this.outerHTML='<div class=modal-photo-placeholder>🌍</div>'" />`;
+    } else {
+      photoWrap.innerHTML = `<div class="modal-photo-placeholder">🌍</div>`;
+    }
+
+    document.getElementById('modalType').textContent = d.category || 'Travel';
+    document.getElementById('modalTitle').textContent = d.name;
+    document.getElementById('modalLoc').textContent = '📍 ' + (d.location || 'India');
+    document.getElementById('modalDesc').textContent = d.description || '';
+    document.getElementById('modalPrice').textContent = '₹' + Number(d.price || 0).toLocaleString('en-IN');
+    document.getElementById('modalDuration').textContent = d.duration || 'Flexible';
+
+    const highlights = (d.highlights || '').split(',').map(h => h.trim()).filter(Boolean);
+    document.getElementById('modalHighlights').innerHTML = highlights.map(h => `<span class="highlight-tag">✦ ${h}</span>`).join('');
+
+    document.getElementById('destModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function handleModalClick(e) {
+    if (e.target === document.getElementById('destModal')) closeModal();
+  }
+
+  function closeModal() {
+    document.getElementById('destModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function bookFromModal() {
+    if (currentModalDest) {
+      closeModal();
+      document.getElementById('bookDest').value = currentModalDest.name;
+      setTimeout(() => document.getElementById('booking').scrollIntoView({ behavior: 'smooth' }), 200);
+    }
+  }
+
+  // ============================
+  // BOOKING — WHATSAPP
+  // ============================
+  function handleBooking(e) {
+    e.preventDefault();
+    const name    = document.getElementById('bookName').value.trim();
+    const phone   = document.getElementById('bookPhone').value.trim();
+    const email   = document.getElementById('bookEmail').value.trim();
+    const dest    = document.getElementById('bookDest').value;
+    const date    = document.getElementById('bookDate').value;
+    const persons = document.getElementById('bookPersons').value;
+    const remarks = document.getElementById('bookRemarks').value.trim();
+
+    const dests = getDestinations();
+    const selectedDest = dests.find(d => d.name === dest);
+    const price = selectedDest
+      ? `₹${Number(selectedDest.price || 0).toLocaleString('en-IN')} per person`
+      : 'To be quoted';
+
+    const totalNote = selectedDest && persons
+      ? `₹${(Number(selectedDest.price) * Number(persons)).toLocaleString('en-IN')} (total for ${persons} person${persons > 1 ? 's' : ''})`
+      : '';
+
+    const message =
+`🌍 *NEW BOOKING REQUEST — WonderTrips Travels*
+
+👤 *Customer Details:*
+• Name: ${name}
+• Phone: ${phone}
+• Email: ${email}
+
+✈️ *Trip Details:*
+• Destination: ${dest || 'Not selected'}
+• Travel Date: ${date ? new Date(date).toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'}) : 'Not specified'}
+• No. of Persons: ${persons}
+• Package Price: ${price}
+${totalNote ? `• Estimated Total: ${totalNote}` : ''}
+
+📝 *Special Requests:*
+${remarks || 'None'}
+
+_Sent via WonderTrips Travels website_`;
+
+    const waURL = `https://wa.me/${getAdminWhatsApp()}?text=${encodeURIComponent(message)}`;
+    window.open(waURL, '_blank');
+    document.getElementById('bookingForm').reset();
+    showToast('✅ Opening WhatsApp with your booking details!');
+  }
+
+  // ============================
+  // TOAST
+  // ============================
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.style.cssText = `position:fixed;bottom:30px;right:30px;z-index:9998;background:linear-gradient(135deg,#7C3AED,#0D9488);color:#fff;padding:14px 24px;border-radius:14px;font-weight:600;font-size:0.9rem;box-shadow:0 8px 30px rgba(124,58,237,0.4);animation:fadeUp 0.3s ease;`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  // ============================
+  // SCROLL REVEAL
+  // ============================
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ============================
+  // NAV
+  // ============================
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.background = window.scrollY > 60
+      ? 'rgba(10,10,26,0.97)' : 'rgba(10,10,26,0.7)';
+  });
+
+  // ============================
+  // INIT
+  // ============================
+  renderDestinations();
+  document.getElementById('bookDate').min = new Date().toISOString().split('T')[0];
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) splash.style.display = 'none';
+  }, 3700);
+</script>
+</body>
+</html>
