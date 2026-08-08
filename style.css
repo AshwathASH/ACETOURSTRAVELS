@@ -647,7 +647,7 @@ input:focus {
 @media (max-width: 900px) {
     .contact-split {
         flex-direction: column-reverse;
-        gap: 1 rem;
+        gap: 3rem;
     }
     .contact-right {
         margin-bottom: -2rem;
