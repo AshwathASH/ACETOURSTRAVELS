@@ -32,7 +32,7 @@ p { color: var(--text-muted); line-height: 1.6; }
 /* Hero Section */
 .hero {
     position: relative;
-    height: 60vh;
+    height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +47,7 @@ p { color: var(--text-muted); line-height: 1.6; }
     bottom: 0;
     left: 0;
     right: 0;
-    height: 55px;
+    height: 100px;
     background: linear-gradient(to bottom, transparent, var(--bg-main));
     z-index: 2;
 }
@@ -589,7 +589,7 @@ input:focus {
     }
     .about-fade-text {
         width: 100%;
-        padding-bottom: 10rem;
+        padding-bottom: 2rem;
     }
 }
 
@@ -610,7 +610,7 @@ input:focus {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 4rem;
+    gap: 2rem;
 }
 
 .contact-left {
@@ -647,9 +647,10 @@ input:focus {
 @media (max-width: 900px) {
     .contact-split {
         flex-direction: column-reverse;
+        gap: 1 rem;
     }
     .contact-right {
-        margin-bottom: 3rem;
+        margin-bottom: -2rem;
     }
 }
 
@@ -686,7 +687,7 @@ input:focus {
 
 /* Footer */
 .footer {
-    padding: 3rem 5%;
+    padding: 1.5rem 5%;
     background-color: var(--primary);
     color: #fff;
     text-align: center;
@@ -712,7 +713,17 @@ input:focus {
         min-height: auto;
     }
     .fleet-section {
-        padding: 1rem 5% 2rem;
+        padding: 2rem 5% 1rem;
+    }
+    .contact-section {
+        padding: 2rem 5%;
+    }
+    .footer {
+        padding: 0.8rem 5%;
+    }
+    .footer .logo {
+        margin-bottom: 0.3rem;
+        font-size: 1rem;
     }
     .hero-content {
         animation: floatMobile 6s ease-in-out infinite;
